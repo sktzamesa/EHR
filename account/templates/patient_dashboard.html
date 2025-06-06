@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard | EHR Portal</title>
+    <link rel="stylesheet" href="{% static 'css/patient_dashboard.css' %}">
+</head>
+<body>
+    <aside class="sidebar collapsed" id="sidebar">
+        <div class="sidebar-header">
+            <span class="ehr-logo">EHR Logo</span>
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                <span id="sidebarToggleIcon">&#9776;</span>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active"><span>🏠</span> <span class="sidebar-text">Dashboard</span></a>
+            <a href="#" class="sidebar-link"><span>📄</span> <span class="sidebar-text">Health Records</span></a>
+            <a href="#" class="sidebar-link"><span>📅</span> <span class="sidebar-text">Appointment Records</span></a>
+        </nav>
+    </aside>
+    <div class="dashboard-content" id="dashboardContent">
+        <header class="dashboard-header">
+            <div class="dashboard-user">
+                <img src="dp.jpg" alt="Patient Avatar">
+                <span>Hi, {{ username }}!</span>
+            <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="logout-btn">Logout</button>
+</form>
+        </header>
+        <main class="dashboard-main-grid">
+            <section class="dashboard-main-left">
+                <section class="dashboard-welcome">
+                    <h2>
+                        Welcome, [Username]!
+                    </h2>
+                    <p>
+                        Here you can view your health records and manage your appointments.
+                    </p>
+                    <div class="dashboard-cards">
+                        <div class="dashboard-card">
+                            <span class="card-icon">📄</span>
+                            <h3>My Health Records</h3>
+                            <p>View lab results, prescriptions, and visit summaries.</p>
+                        </div>
+                        <div class="dashboard-card">
+                            <span class="card-icon">📅</span>
+                            <h3>Appointments</h3>
+                            <p>See detailed appointment records and upcoming visits</p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <aside class="dashboard-main-right">
+                <div class="doctor-status-container">
+                    <div class="doctor-status-header">
+                        <h3>Available Doctor</h3>
+                    </div>
+                    <div class="doctor-list">
+                        <div class="doctor-info" data-doctor="Dr. John Doe" data-email="johndoe@ehr.com">
+                            <img src="https://scontent.fmnl30-3.fna.fbcdn.net/v/t39.30808-6/469984245_3904115036572694_3646693016826261098_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFOKCIqjZNYs1tobrlTU-f_m5SI22XtzRmblIjbZe3NGQuuGfC_oEScSRddHyv40NfpEbsNoIi0Wps7k8Xbf5sU&_nc_ohc=xdyaQbkjOhMQ7kNvwEZmkD3&_nc_oc=AdmsxP4klAV_wCHpzQ7e1JaOPJ4ZizGEsQ3yFW89XtgACT6xyslNpr2H6iQRUUHC-qw&_nc_zt=23&_nc_ht=scontent.fmnl30-3.fna&_nc_gid=5kU2SpHVk-HYddEHGkhmlg&oh=00_AfPNeTsPqOLA7lHdM54ziwmYSiRK-_IZNdF_karrFXVePw&oe=68482BC9" alt="Doctor Avatar" class="doctor-avatar">
+                            <div class="doctor-details">
+                                <div class="doctor-name">Dr. Lhojen</div>
+                                <div class="doctor-specialty">Magaling mag mahal</div>
+                                <div class="doctor-status active">Status: walang jowa</div>
+                            </div>
+                            <div class="doctor-dropdown">
+                                <button class="doctor-dropdown-btn" onclick="toggleDoctorDropdown(event, this)">⋮</button>
+                                <div class="doctor-dropdown-menu">
+                                    <button onclick="viewProfile('Dr. John Doe')">View Profile</button>
+                                    <button onclick="setAppointment('Dr. John Doe')">Set Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                                                <div class="doctor-info" data-doctor="Dr. John Doe" data-email="johndoe@ehr.com">
+                            <img src="https://scontent.fmnl30-3.fna.fbcdn.net/v/t39.30808-6/469984245_3904115036572694_3646693016826261098_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFOKCIqjZNYs1tobrlTU-f_m5SI22XtzRmblIjbZe3NGQuuGfC_oEScSRddHyv40NfpEbsNoIi0Wps7k8Xbf5sU&_nc_ohc=xdyaQbkjOhMQ7kNvwEZmkD3&_nc_oc=AdmsxP4klAV_wCHpzQ7e1JaOPJ4ZizGEsQ3yFW89XtgACT6xyslNpr2H6iQRUUHC-qw&_nc_zt=23&_nc_ht=scontent.fmnl30-3.fna&_nc_gid=5kU2SpHVk-HYddEHGkhmlg&oh=00_AfPNeTsPqOLA7lHdM54ziwmYSiRK-_IZNdF_karrFXVePw&oe=68482BC9" alt="Doctor Avatar" class="doctor-avatar">
+                            <div class="doctor-details">
+                                <div class="doctor-name">Dr. Lhojen</div>
+                                <div class="doctor-specialty">Magaling mag mahal</div>
+                                <div class="doctor-status active">Status: walang jowa</div>
+                            </div>
+                            <div class="doctor-dropdown">
+                                <button class="doctor-dropdown-btn" onclick="toggleDoctorDropdown(event, this)">⋮</button>
+                                <div class="doctor-dropdown-menu">
+                                    <button onclick="viewProfile('Dr. John Doe')">View Profile</button>
+                                    <button onclick="setAppointment('Dr. John Doe')">Set Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                                                <div class="doctor-info" data-doctor="Dr. John Doe" data-email="johndoe@ehr.com">
+                            <img src="https://scontent.fmnl30-3.fna.fbcdn.net/v/t39.30808-6/469984245_3904115036572694_3646693016826261098_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFOKCIqjZNYs1tobrlTU-f_m5SI22XtzRmblIjbZe3NGQuuGfC_oEScSRddHyv40NfpEbsNoIi0Wps7k8Xbf5sU&_nc_ohc=xdyaQbkjOhMQ7kNvwEZmkD3&_nc_oc=AdmsxP4klAV_wCHpzQ7e1JaOPJ4ZizGEsQ3yFW89XtgACT6xyslNpr2H6iQRUUHC-qw&_nc_zt=23&_nc_ht=scontent.fmnl30-3.fna&_nc_gid=5kU2SpHVk-HYddEHGkhmlg&oh=00_AfPNeTsPqOLA7lHdM54ziwmYSiRK-_IZNdF_karrFXVePw&oe=68482BC9" alt="Doctor Avatar" class="doctor-avatar">
+                            <div class="doctor-details">
+                                <div class="doctor-name">Dr. Lhojen</div>
+                                <div class="doctor-specialty">Magaling mag mahal</div>
+                                <div class="doctor-status active">Status: walang jowa</div>
+                            </div>
+                            <div class="doctor-dropdown">
+                                <button class="doctor-dropdown-btn" onclick="toggleDoctorDropdown(event, this)">⋮</button>
+                                <div class="doctor-dropdown-menu">
+                                    <button onclick="viewProfile('Dr. John Doe')">View Profile</button>
+                                    <button onclick="setAppointment('Dr. John Doe')">Set Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                                                <div class="doctor-info" data-doctor="Dr. John Doe" data-email="johndoe@ehr.com">
+                            <img src="https://scontent.fmnl30-3.fna.fbcdn.net/v/t39.30808-6/469984245_3904115036572694_3646693016826261098_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFOKCIqjZNYs1tobrlTU-f_m5SI22XtzRmblIjbZe3NGQuuGfC_oEScSRddHyv40NfpEbsNoIi0Wps7k8Xbf5sU&_nc_ohc=xdyaQbkjOhMQ7kNvwEZmkD3&_nc_oc=AdmsxP4klAV_wCHpzQ7e1JaOPJ4ZizGEsQ3yFW89XtgACT6xyslNpr2H6iQRUUHC-qw&_nc_zt=23&_nc_ht=scontent.fmnl30-3.fna&_nc_gid=5kU2SpHVk-HYddEHGkhmlg&oh=00_AfPNeTsPqOLA7lHdM54ziwmYSiRK-_IZNdF_karrFXVePw&oe=68482BC9" alt="Doctor Avatar" class="doctor-avatar">
+                            <div class="doctor-details">
+                                <div class="doctor-name">Dr. Lhojen</div>
+                                <div class="doctor-specialty">Magaling mag mahal</div>
+                                <div class="doctor-status active">Status: walang jowa</div>
+                            </div>
+                            <div class="doctor-dropdown">
+                                <button class="doctor-dropdown-btn" onclick="toggleDoctorDropdown(event, this)">⋮</button>
+                                <div class="doctor-dropdown-menu">
+                                    <button onclick="viewProfile('Dr. John Doe')">View Profile</button>
+                                    <button onclick="setAppointment('Dr. John Doe')">Set Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                                                <div class="doctor-info" data-doctor="Dr. John Doe" data-email="johndoe@ehr.com">
+                            <img src="https://scontent.fmnl30-3.fna.fbcdn.net/v/t39.30808-6/469984245_3904115036572694_3646693016826261098_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFOKCIqjZNYs1tobrlTU-f_m5SI22XtzRmblIjbZe3NGQuuGfC_oEScSRddHyv40NfpEbsNoIi0Wps7k8Xbf5sU&_nc_ohc=xdyaQbkjOhMQ7kNvwEZmkD3&_nc_oc=AdmsxP4klAV_wCHpzQ7e1JaOPJ4ZizGEsQ3yFW89XtgACT6xyslNpr2H6iQRUUHC-qw&_nc_zt=23&_nc_ht=scontent.fmnl30-3.fna&_nc_gid=5kU2SpHVk-HYddEHGkhmlg&oh=00_AfPNeTsPqOLA7lHdM54ziwmYSiRK-_IZNdF_karrFXVePw&oe=68482BC9" alt="Doctor Avatar" class="doctor-avatar">
+                            <div class="doctor-details">
+                                <div class="doctor-name">Dr. Lhojen</div>
+                                <div class="doctor-specialty">Magaling mag mahal</div>
+                                <div class="doctor-status active">Status: walang jowa</div>
+                            </div>
+                            <div class="doctor-dropdown">
+                                <button class="doctor-dropdown-btn" onclick="toggleDoctorDropdown(event, this)">⋮</button>
+                                <div class="doctor-dropdown-menu">
+                                    <button onclick="viewProfile('Dr. John Doe')">View Profile</button>
+                                    <button onclick="setAppointment('Dr. John Doe')">Set Appointment</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add more .doctor-info blocks for more doctors -->
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const dashboardContent = document.getElementById('dashboardContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+
+            // Sidebar active link logic
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Remove active from all links
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            // Add active to the clicked link
+            this.classList.add('active');
+        });
+    });
+
+    function logout() {
+    // Example: redirect to login page
+    window.location.href = "login.html";
+}
+    </script>
+    <script>
+function toggleDoctorDropdown(event, btn) {
+    event.stopPropagation();
+    // Close any open dropdowns except this one
+    document.querySelectorAll('.doctor-dropdown-menu').forEach(menu => {
+        if (menu !== btn.nextElementSibling) {
+            menu.style.display = 'none';
+        }
+    });
+    // Toggle this one
+    const menu = btn.nextElementSibling;
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+}
+
+// Show submenu when clicking anywhere on doctor-info except the dropdown button
+document.querySelectorAll('.doctor-info').forEach(info => {
+    info.addEventListener('click', function(e) {
+        // Prevent double toggle if triple dot is clicked
+        if (e.target.classList.contains('doctor-dropdown-btn')) return;
+        // Close other dropdowns
+        document.querySelectorAll('.doctor-dropdown-menu').forEach(menu => {
+            if (menu !== this.querySelector('.doctor-dropdown-menu')) {
+                menu.style.display = 'none';
+            }
+        });
+        // Toggle this one
+        const menu = this.querySelector('.doctor-dropdown-menu');
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        e.stopPropagation();
+    });
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', () => {
+    document.querySelectorAll('.doctor-dropdown-menu').forEach(menu => menu.style.display = 'none');
+});
+
+// Example functions for dropdown actions
+function viewProfile(doctorName) {
+    alert('Viewing profile for ' + doctorName);
+    // Implement your logic here
+}
+function setAppointment(doctorName) {
+    alert('Setting appointment with ' + doctorName);
+    // Implement your logic here
+}
+</script>
+</body>
+</html>
